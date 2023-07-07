@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/practice_num_typing/static/css/main.e6c13ad2.css",
+    "main.js": "/practice_num_typing/static/js/main.dd610261.js",
+    "static/js/787.c62a4714.chunk.js": "/practice_num_typing/static/js/787.c62a4714.chunk.js",
+    "index.html": "/practice_num_typing/index.html",
+    "main.e6c13ad2.css.map": "/practice_num_typing/static/css/main.e6c13ad2.css.map",
+    "main.dd610261.js.map": "/practice_num_typing/static/js/main.dd610261.js.map",
+    "787.c62a4714.chunk.js.map": "/practice_num_typing/static/js/787.c62a4714.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.dd610261.js"
+  ]
+}
