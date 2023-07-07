@@ -1,5 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
+import CollectSound from "./util/Quiz-Correct_Answer.mp3";
+import WrongSound from "./util/Quiz-Wrong_Buzzer.mp3";
 import Header from "./components/modules/Header";
 import Question from "./components/modules/Question";
 import Status from "./components/modules/Status";
@@ -25,6 +27,8 @@ export default function App() {
     if (nowAnswer === question.name) {
       console.log("正解");
       collectAnswer();
+    } else if (nowAnswer !== "" && question.name.indexOf(nowAnswer) !== 0) {
+      playWrongSound();
     } else {
       setQuestion((props) => {
         return {
@@ -38,7 +42,7 @@ export default function App() {
   };
 
   const collectAnswer = () => {
-    console.log("正解後の処理");
+    playCollectSound();
     const name = generateQuestion(question.digit);
     setQuestion((props) => {
       return {
@@ -49,6 +53,17 @@ export default function App() {
       };
     });
   };
+
+  const playCollectSound = () => {
+    const collectSound = new Audio(CollectSound);
+    collectSound.play();
+  };
+
+  const playWrongSound = () => {
+    const collectSound = new Audio(WrongSound);
+    collectSound.play();
+  };
+
 
   const handleChangedDigit = (digitValue) => {
     setQuestion((props) => {
