@@ -1,5 +1,6 @@
 import React from "react";
-import { TextField } from "@mui/material";
+import { Box, Paper } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 function StateEnum({ state }) {
   if (state) {
@@ -9,21 +10,34 @@ function StateEnum({ state }) {
   }
 }
 
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  textAlign: "center",
+  color: theme.palette.text.primary,
+  fontSize: "40px",
+  height: 100,
+  lineHeight: "100px",
+}));
+
 const Status = ({ state }) => {
   return (
-    <TextField
-      id="question-display"
-      value={StateEnum({ state })}
-      InputProps={{
-        readOnly: true,
-        style: { fontSize: 40, height: 100 },
-      }}
-      InputLabelProps={{ style: { fontSize: 40 }, shrink: true }}
-      sx={{ display: "flex" }}
-      margin="normal"
-      variant="filled"
-      fullWidth
-    />
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          "& > :not(style)": {
+            m: 1,
+            width: 200,
+            height: 100,
+          },
+        }}
+      >
+        <StyledPaper elevation={3} variant="outlined">
+          {StateEnum({ state })}
+        </StyledPaper>
+      </Box>
+    </>
   );
 };
 
