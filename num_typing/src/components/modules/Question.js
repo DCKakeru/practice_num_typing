@@ -1,12 +1,13 @@
 import React from 'react'
 import { TextField } from "@mui/material";
 
-const Question = ({name}) => {
+function ViewQuestion({ question }) {
   return (
-    <TextField
+    <div>
+      <TextField
       id="question-display"
       label="問題"
-      value={name}
+      value={question}
       InputProps={{
         readOnly: true,
         style: { fontSize: 60, height: 200 },
@@ -17,7 +18,8 @@ const Question = ({name}) => {
       variant="filled"
       fullWidth
     />
-  )
+    </div>
+  );
 }
 
-export default Question;
+export default ViewQuestion;

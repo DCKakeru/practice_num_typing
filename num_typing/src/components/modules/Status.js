@@ -9,9 +9,10 @@ function StateEnum({ state }) {
   }
 }
 
-const Status = ({ state }) => {
+function ViewState({ state }) {
   return (
-    <TextField
+    <div>
+      <TextField
       id="question-display"
       value={StateEnum({ state })}
       InputProps={{
@@ -24,7 +25,8 @@ const Status = ({ state }) => {
       variant="filled"
       fullWidth
     />
+    </div>
   );
-};
+}
 
-export default Status;
+export default ViewState;

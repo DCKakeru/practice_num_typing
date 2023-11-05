@@ -1,25 +1,24 @@
-import React from "react";
 import { TextField } from "@mui/material";
 
-function ViewAnswer({ answer, onAnswerChange }) {
+function ViewDigit({ digit, onDigitChange }) {
   return (
     <div>
       <TextField
         id="standard-basic"
-        label="回答欄"
+        label="桁数"
         margin="normal"
         variant="filled"
-        value={answer}
-        onChange={(e) => onAnswerChange(e.currentTarget.value)}
+        type="number"
+        value={digit}
+        onChange={(e) => onDigitChange(e.currentTarget.value)}
         InputProps={{
-          style: { fontSize: 60, height: 200 },
+          style: { fontSize: 50, height: 150 },
         }}
         InputLabelProps={{ style: { fontSize: 40 }, shrink: true }}
         sx={{ display: "flex" }}
-        fullWidth
       />
     </div>
   );
 }
 
-export default ViewAnswer;
+export default ViewDigit;
