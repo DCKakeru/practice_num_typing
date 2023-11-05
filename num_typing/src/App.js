@@ -7,7 +7,66 @@ import Question from "./components/modules/Question";
 import Status from "./components/modules/Status";
 import { TextField } from "@mui/material";
 
-export default function App() {
+function ViewDigit({ digit, onDigitChange }) {
+  return (
+    <div>
+      <TextField
+        id="standard-basic"
+        label="桁数"
+        margin="normal"
+        variant="filled"
+        type="number"
+        value={digit}
+        onChange={(e) => onDigitChange(e.currentTarget.value)}
+        InputProps={{
+          style: { fontSize: 50, height: 150 },
+        }}
+        InputLabelProps={{ style: { fontSize: 40 }, shrink: true }}
+        sx={{ display: "flex" }}
+      />
+    </div>
+  );
+}
+
+function ViewQuestion({ question }) {
+  return (
+    <div>
+      <Question name={question} />
+    </div>
+  );
+}
+
+function ViewState({ states }) {
+  const isCorrect = states.name === states.answer;
+  return (
+    <div>
+      <Status state={isCorrect} />
+    </div>
+  );
+}
+
+function ViewAnswer({ answer, onAnswerChange }) {
+  return (
+    <div>
+      <TextField
+        id="standard-basic"
+        label="回答欄"
+        margin="normal"
+        variant="filled"
+        value={answer}
+        onChange={(e) => onAnswerChange(e.currentTarget.value)}
+        InputProps={{
+          style: { fontSize: 60, height: 200 },
+        }}
+        InputLabelProps={{ style: { fontSize: 40 }, shrink: true }}
+        sx={{ display: "flex" }}
+        fullWidth
+      />
+    </div>
+  );
+}
+
+function NumTyping() {
   const generateQuestion = (digit) => {
     return (
       Math.floor(Math.random() * (10 ** digit - 10 ** (digit - 1))) +
@@ -21,6 +80,17 @@ export default function App() {
     state: false,
     answer: "",
   });
+
+  const handleChangedDigit = (digitValue) => {
+    setQuestion(() => {
+      return {
+        digit: Number(digitValue),
+        name: generateQuestion(Number(digitValue)).toString(),
+        state: false,
+        answer: "",
+      };
+    });
+  };
 
   const handleChangedAnswer = (targetValue) => {
     const nowAnswer = targetValue;
@@ -64,63 +134,24 @@ export default function App() {
     collectSound.play();
   };
 
-
-  const handleChangedDigit = (digitValue) => {
-    setQuestion((props) => {
-      return {
-        digit: Number(digitValue),
-        name: generateQuestion(Number(digitValue)).toString(),
-        state: false,
-        answer: "",
-      };
-    });
-  };
-
   return (
     <div className="App">
       <header className="App-header">
         <Header />
       </header>
       <main>
-        <div>
-          <TextField
-            id="standard-basic"
-            label="桁数"
-            margin="normal"
-            variant="filled"
-            type="number"
-            value={question.digit}
-            onChange={(e) => handleChangedDigit(e.currentTarget.value)}
-            InputProps={{
-              style: { fontSize: 50, height: 150 },
-            }}
-            InputLabelProps={{ style: { fontSize: 40 }, shrink: true }}
-            sx={{ display: "flex" }}
-          />
-        </div>
-        <div>
-          <Question name={question.name} />
-        </div>
-        <div>
-          <Status state={question.state} />
-        </div>
-        <div>
-          <TextField
-            id="standard-basic"
-            label="回答欄"
-            margin="normal"
-            variant="filled"
-            value={question.answer}
-            onChange={(e) => handleChangedAnswer(e.currentTarget.value)}
-            InputProps={{
-              style: { fontSize: 60, height: 200 },
-            }}
-            InputLabelProps={{ style: { fontSize: 40 }, shrink: true }}
-            sx={{ display: "flex" }}
-            fullWidth
-          />
-        </div>
+        <ViewDigit digit={question.digit} onDigitChange={handleChangedDigit} />
+        <ViewQuestion question={question.name} />
+        <ViewState states={question} />
+        <ViewAnswer
+          answer={question.answer}
+          onAnswerChange={handleChangedAnswer}
+        />
       </main>
     </div>
   );
+}
+
+export default function App() {
+  return <NumTyping />;
 }
