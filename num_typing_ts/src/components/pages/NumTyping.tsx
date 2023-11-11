@@ -1,13 +1,26 @@
 import React, { useState } from "react";
+import { useParams } from "react-router";
 import CollectSound from "../../util/Quiz-Correct_Answer.mp3";
 import WrongSound from "../../util/Quiz-Wrong_Buzzer.mp3";
 import ViewHeader from "../modules/Header";
 import ViewAnswer from "../modules/Answer";
 import ViewQuestion from "../modules/Question";
 import ViewStatus from "../modules/Status";
-import ViewDigit from "../modules/Digit";
+import ViewCorrectAnswerCount from "../modules/CorrectAnswerCount";
+import EndButton from "../modules/EndButton";
 
-const NumTyping : React.FC = () => {
+type NumTypingParams = {
+  digitValue: string;
+};
+
+const NumTyping: React.FC = () => {
+  const { digitValue } = useParams<NumTypingParams>();
+  // digitはStartButtonを押す際に1~10の整数に限定
+  let digit = 4;
+  if (digitValue) {
+    digit = parseInt(digitValue);
+  }
+
   const generateQuestion = (digit: number) => {
     return (
       Math.floor(Math.random() * (10 ** digit - 10 ** (digit - 1))) +
@@ -16,22 +29,12 @@ const NumTyping : React.FC = () => {
   };
 
   const [question, setQuestion] = useState({
-    digit: 4,
-    name: generateQuestion(4),
+    digit: digit,
+    name: generateQuestion(digit),
     state: false,
     answer: "",
+    correctAnswerCount: 0,
   });
-
-  const handleChangedDigit = (digitValue:string) => {
-    setQuestion(() => {
-      return {
-        digit: Number(digitValue),
-        name: generateQuestion(Number(digitValue)).toString(),
-        state: false,
-        answer: "",
-      };
-    });
-  };
 
   const handleChangedAnswer = (targetValue: string) => {
     const nowAnswer = targetValue;
@@ -47,6 +50,7 @@ const NumTyping : React.FC = () => {
           name: props.name,
           state: nowAnswer === question.name,
           answer: nowAnswer,
+          correctAnswerCount: props.correctAnswerCount,
         };
       });
     }
@@ -61,6 +65,7 @@ const NumTyping : React.FC = () => {
         name: name.toString(),
         state: true,
         answer: "",
+        correctAnswerCount: props.correctAnswerCount + 1,
       };
     });
   };
@@ -81,16 +86,19 @@ const NumTyping : React.FC = () => {
         <ViewHeader />
       </header>
       <main>
-        <ViewDigit digit={question.digit} onDigitChange={handleChangedDigit} />
         <ViewQuestion question={question.name} />
         <ViewStatus state={question.state} />
         <ViewAnswer
           answer={question.answer}
           onAnswerChange={handleChangedAnswer}
         />
+        <ViewCorrectAnswerCount
+          count={question.correctAnswerCount.toString()}
+        />
+        <EndButton />
       </main>
     </div>
   );
-}
+};
 
 export default NumTyping;

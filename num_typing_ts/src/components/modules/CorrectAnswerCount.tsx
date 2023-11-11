@@ -1,16 +1,18 @@
 import { TextField } from "@mui/material";
 
-interface ViewQuestionProps {
-  question: string;
+interface ViewCorrectAnswerCountProps {
+  count: string;
 }
 
-function ViewQuestion({ question }: ViewQuestionProps) {
+const ViewCorrectAnswerCount: React.FC<ViewCorrectAnswerCountProps> = ({
+  count,
+}) => {
   return (
     <div>
       <TextField
         id="question-display"
-        label="問題"
-        value={question}
+        label="正答数"
+        value={count}
         InputProps={{
           readOnly: true,
           style: { fontSize: 60, height: 200 },
@@ -23,6 +25,6 @@ function ViewQuestion({ question }: ViewQuestionProps) {
       />
     </div>
   );
-}
+};
 
-export default ViewQuestion;
+export default ViewCorrectAnswerCount;
