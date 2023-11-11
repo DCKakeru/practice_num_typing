@@ -6,8 +6,8 @@ import StartButton from "../modules/StartButton";
 const Start: React.FC = () => {
   const [digit, setDigit] = useState<number>(4);
   const onDigitChange = (digitValue: string) => {
-    // 数値判定のバリデーションが必要
-    setDigit(+digitValue);
+    // 数値判定のバリデーションはStartButtonを押したときに実施
+    setDigit(parseInt(digitValue));
   };
 
   return (
@@ -17,7 +17,7 @@ const Start: React.FC = () => {
       </header>
       <main>
         <ViewDigit digit={digit} onDigitChange={onDigitChange} />
-        <StartButton digit={digit}/>
+        <StartButton digit={digit} />
       </main>
     </div>
   );

@@ -10,12 +10,16 @@ import ViewCorrectAnswerCount from "../modules/CorrectAnswerCount";
 import EndButton from "../modules/EndButton";
 
 type NumTypingParams = {
-  digit: string;
+  digitValue: string;
 };
 
 const NumTyping: React.FC = () => {
-  const { digit } = useParams<NumTypingParams>();
-  // digitがParseできる値かチェックする必要あり
+  const { digitValue } = useParams<NumTypingParams>();
+  // digitはStartButtonを押す際に1~10の整数に限定
+  let digit = 4;
+  if (digitValue) {
+    digit = parseInt(digitValue);
+  }
 
   const generateQuestion = (digit: number) => {
     return (
@@ -25,8 +29,8 @@ const NumTyping: React.FC = () => {
   };
 
   const [question, setQuestion] = useState({
-    digit: Number(digit),
-    name: generateQuestion(Number(digit)),
+    digit: digit,
+    name: generateQuestion(digit),
     state: false,
     answer: "",
     correctAnswerCount: 0,
