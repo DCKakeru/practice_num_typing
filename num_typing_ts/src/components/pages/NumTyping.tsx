@@ -7,7 +7,7 @@ import ViewAnswer from "../modules/Answer";
 import ViewQuestion from "../modules/Question";
 import ViewStatus from "../modules/Status";
 import ViewCorrectAnswerCount from "../modules/CorrectAnswerCount";
-import EndButton from "../modules/EndButton";
+import EndModal from "../modules/EndModal";
 
 type NumTypingParams = {
   digitValue: string;
@@ -20,6 +20,8 @@ const NumTyping: React.FC = () => {
   if (digitValue) {
     digit = parseInt(digitValue);
   }
+
+  const questionCountEnd = 10;
 
   const generateQuestion = (digit: number) => {
     return (
@@ -34,6 +36,7 @@ const NumTyping: React.FC = () => {
     state: false,
     answer: "",
     correctAnswerCount: 0,
+    isEndModalOpen: false,
   });
 
   const handleChangedAnswer = (targetValue: string) => {
@@ -51,6 +54,7 @@ const NumTyping: React.FC = () => {
           state: nowAnswer === question.name,
           answer: nowAnswer,
           correctAnswerCount: props.correctAnswerCount,
+          isEndModalOpen: props.isEndModalOpen,
         };
       });
     }
@@ -59,15 +63,29 @@ const NumTyping: React.FC = () => {
   const collectAnswer = () => {
     playCollectSound();
     const name = generateQuestion(question.digit);
-    setQuestion((props) => {
-      return {
-        digit: props.digit,
-        name: name.toString(),
-        state: true,
-        answer: "",
-        correctAnswerCount: props.correctAnswerCount + 1,
-      };
-    });
+    if (question.correctAnswerCount > questionCountEnd - 2) {
+      setQuestion((props) => {
+        return {
+          digit: props.digit,
+          name: name.toString(),
+          state: true,
+          answer: "",
+          correctAnswerCount: questionCountEnd,
+          isEndModalOpen: true,
+        };
+      });
+    } else {
+      setQuestion((props) => {
+        return {
+          digit: props.digit,
+          name: name.toString(),
+          state: true,
+          answer: "",
+          correctAnswerCount: props.correctAnswerCount + 1,
+          isEndModalOpen: false,
+        };
+      });
+    }
   };
 
   const playCollectSound = () => {
@@ -95,7 +113,7 @@ const NumTyping: React.FC = () => {
         <ViewCorrectAnswerCount
           count={question.correctAnswerCount.toString()}
         />
-        <EndButton />
+        <EndModal isOpen={question.isEndModalOpen} />
       </main>
     </div>
   );
