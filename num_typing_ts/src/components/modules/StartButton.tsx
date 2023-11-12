@@ -1,18 +1,24 @@
 import { Button, Alert } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface StartButtonProps {
   digit: number;
+  questionNumber: number;
 }
 
-const CheckNumber = (digit: number) => {
-  return isNaN(digit);
+const CheckNumber = (num: number) => {
+  return isNaN(num);
 };
 
 const CheckDigit = (digit: number) => {
   return !Number.isInteger(digit) || digit < 1 || digit > 10;
 };
 
-const StartButton: React.FC<StartButtonProps> = ({ digit }) => {
+const CheckQuestionNumber = (num: number) => {
+  return !Number.isInteger(num) || num < 1;
+};
+
+const StartButton: React.FC<StartButtonProps> = ({ digit, questionNumber }) => {
   if (CheckNumber(digit)) {
     return (
       <div>
@@ -33,11 +39,25 @@ const StartButton: React.FC<StartButtonProps> = ({ digit }) => {
       </div>
     );
   }
+  if (CheckNumber(questionNumber) || CheckQuestionNumber(questionNumber)) {
+    return (
+      <div>
+        <Button variant="contained" disabled>
+          スタート
+        </Button>
+        <Alert severity="warning">問題数に整数値を入力してください。</Alert>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <Button variant="contained" href={"/numtype/" + digit}>
-        スタート
-      </Button>
+      <Link
+        to="/numtype/"
+        state={{ digitValue: digit, questionNumberValue: questionNumber }}
+      >
+        <Button variant="contained">スタート</Button>
+      </Link>
     </div>
   );
 };

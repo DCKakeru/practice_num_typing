@@ -1,21 +1,24 @@
 import { TextField } from "@mui/material";
 
-interface ViewDigitProps {
-  digit: number;
-  onDigitChange: (value: string) => void;
+interface QuestionNumberProps {
+  questionNumber: number;
+  onQuestionNumberChange: (value: string) => void;
 }
 
-const ViewDigit: React.FC<ViewDigitProps> = ({ digit, onDigitChange }) => {
+const QuestionNumber: React.FC<QuestionNumberProps> = ({
+  questionNumber,
+  onQuestionNumberChange,
+}) => {
   return (
     <div>
       <TextField
         id="standard-basic"
-        label="桁数"
+        label="出題する問題数"
         margin="normal"
         variant="filled"
         type="number"
-        value={digit}
-        onChange={(e) => onDigitChange(e.currentTarget.value)}
+        value={questionNumber}
+        onChange={(e) => onQuestionNumberChange(e.currentTarget.value)}
         InputProps={{
           style: { fontSize: 50, height: 150 },
         }}
@@ -26,4 +29,4 @@ const ViewDigit: React.FC<ViewDigitProps> = ({ digit, onDigitChange }) => {
   );
 };
 
-export default ViewDigit;
+export default QuestionNumber;

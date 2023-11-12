@@ -1,5 +1,6 @@
 import { Modal, Typography, Box, Button } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const style = {
   position: "absolute" as "absolute",
@@ -42,9 +43,11 @@ const EndModal: React.FC<EndModalProps> = ({ isOpen }) => {
           >
             リトライ
           </Button>
-          <Button sx={{ mt: 4, ml: 1 }} variant="outlined" href="/">
-            スタートに戻る
-          </Button>
+          <Link to="/">
+            <Button sx={{ mt: 4, ml: 1 }} variant="outlined">
+              スタートに戻る
+            </Button>
+          </Link>
         </Box>
       </Modal>
     </div>
