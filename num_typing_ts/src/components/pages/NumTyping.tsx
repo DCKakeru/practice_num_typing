@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useParams } from "react-router";
 import CollectSound from "../../util/Quiz-Correct_Answer.mp3";
 import WrongSound from "../../util/Quiz-Wrong_Buzzer.mp3";
 import ViewHeader from "../modules/Header";
@@ -8,20 +7,28 @@ import ViewQuestion from "../modules/Question";
 import ViewStatus from "../modules/Status";
 import ViewCorrectAnswerCount from "../modules/CorrectAnswerCount";
 import EndModal from "../modules/EndModal";
+import { useLocation } from "react-router-dom";
 
 type NumTypingParams = {
   digitValue: string;
+  questionNumberValue: string;
 };
 
 const NumTyping: React.FC = () => {
-  const { digitValue } = useParams<NumTypingParams>();
+  const location = useLocation();
+  const state: NumTypingParams = location.state;
   // digitはStartButtonを押す際に1~10の整数に限定
   let digit = 4;
-  if (digitValue) {
-    digit = parseInt(digitValue);
+  if (state.digitValue) {
+    digit = parseInt(state.digitValue);
   }
 
-  const questionCountEnd = 10;
+  // questionNumberはNaNでないことだけ確認済み
+  let questionNumber = 5;
+  if (state.questionNumberValue) {
+    questionNumber = parseInt(state.questionNumberValue);
+  }
+  const questionCountEnd = questionNumber;
 
   const generateQuestion = (digit: number) => {
     return (

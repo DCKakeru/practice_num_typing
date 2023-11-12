@@ -8,7 +8,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Start />} />
-          <Route path="/numtype/:digitValue" element={<NumTyping />} />
+          <Route path="/numtype/" element={<NumTyping />} />
         </Routes>
       </div>
     </BrowserRouter>
