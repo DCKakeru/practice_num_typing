@@ -1,17 +1,17 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import NumTyping from "./components/pages/NumTyping";
 import Start from "./components/pages/StartMenu";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Start />} />
+          <Route index element={<Start />} />
           <Route path="/numtype/" element={<NumTyping />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
